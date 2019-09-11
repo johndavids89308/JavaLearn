@@ -1,13 +1,13 @@
 package accounts;
 
 public class BankAccount {
-    public double balance;
+    protected double balance;
 
     public BankAccount(){
         balance = 0;
     }
 
-    public BankAccount(double balance){
+    protected BankAccount(double balance){
         this.balance = balance;
     }
 
