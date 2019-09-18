@@ -5,8 +5,11 @@ package employees;
 
 public class SalesManager extends Company implements Employee {
 
-    public SalesManager(){
+    private String name;
+
+    public SalesManager(String name){
         fixPartSalary = randomSalary();
+        this.name = name;
     }
 
     // Метод определения зарплаты
@@ -21,6 +24,13 @@ public class SalesManager extends Company implements Employee {
     @Override
     public double getProfitSelf(){
         return profitSelf;
+    }
+
+    // Получить имя
+
+    @Override
+    public String getName(){
+        return name;
     }
 
     // метод зарабатывания денег

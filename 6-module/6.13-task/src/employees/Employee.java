@@ -6,4 +6,5 @@ public interface Employee {
     double getProfitSelf();
     boolean getDismiss();
     void setDismiss();
+    String getName();
 }

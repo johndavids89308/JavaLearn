@@ -5,8 +5,11 @@ package employees;
 
 public class TopManager extends Company implements Employee{
 
-    public TopManager(){
+    private String name;
+
+    public TopManager(String name){
         fixPartSalary = randomSalary();
+        this.name = name;
     }
 
     // Метод определения зарплаты
@@ -32,6 +35,13 @@ public class TopManager extends Company implements Employee{
     @Override
     public double getProfitSelf(){
         return profitSelf;
+    }
+
+    // Получить имя
+
+    @Override
+    public String getName(){
+        return name;
     }
 
     // Получить флаг увольнения

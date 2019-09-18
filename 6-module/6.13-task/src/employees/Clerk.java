@@ -4,8 +4,11 @@ package employees;
 
 public class Clerk extends Company implements Employee {
 
-    public Clerk(){
+    private String name;
+
+    public Clerk(String name){
         fixPartSalary = randomSalary();
+        this.name = name;
     }
 
     // Метод определения зарплаты
@@ -30,6 +33,13 @@ public class Clerk extends Company implements Employee {
     @Override
     public double getProfitSelf(){
         return profitSelf;
+    }
+
+    // Получить имя
+
+    @Override
+    public String getName(){
+        return name;
     }
 
     // Получить флаг увольнения

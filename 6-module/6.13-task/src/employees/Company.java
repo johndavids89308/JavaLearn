@@ -2,6 +2,7 @@ package employees;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 
 public class Company {
 
@@ -34,17 +35,25 @@ public class Company {
 
     // Метод генерации сотрудников
 
-    ArrayList<Employee> employeeArrayList = new ArrayList<>();
+    private String[] nameList = new String[]{
+            "Smith","Smith","Smith","Smith","Smith","Smith","Smith","Smith","Smith","Smith","Smith","Smith","Smith","Smith","Smith","Smith","Smith","Smith","Smith","Smith","Smith","Smith","Smith","Smith","Smith","Smith","Smith","Smith","Neo","Neo","Neo","Neo","Neo","Melissa","Neo","Neo","Neo","Dennis","Mia","Morpheus","Morpheus","Morpheus","Morpheus","Morpheus","Morpheus","Morpheus","Morpheus","Morpheus","Morpheus","Morpheus","Morpheus","Morpheus","Morpheus","Michelle","Sandra","Jesus","Sybil","Jose","Savannah","Trinity","Trinity","Trinity","Trinity","Trinity","Trinity","Trinity","Trinity","Trinity","Trinity","Trinity","Trinity","Trinity","Trinity","Trinity","Trinity","Trinity","Trinity","Trinity","Trinity","Trinity","Trinity","Trinity","Trinity","Trinity","Trinity","Trinity","Trinity","Trinity","Neo","Neo","Neo","Neo","Neo","Neo","Neo","Neo","Neo","Neo","Neo","Neo","Neo","Neo","Neo","Neo","Neo"
+    };
+    private ArrayList<Employee> employeeArrayList = new ArrayList<>();
 
     public void generateEmployee(){
+
         for (int i = 0, j = 0; i <= 270; i++, j++){
+
+            int min = 0, max = 104;
+            max -= min;
+            int num = (int) (Math.random() * ++max) + min;
 
             if (j > 2) j = 0;
 
             switch (j){
-                case 0: employeeArrayList.add(new SalesManager()); break;
-                case 1: employeeArrayList.add(new TopManager()); break;
-                case 2: employeeArrayList.add(new Clerk()); break;
+                case 0: employeeArrayList.add(new SalesManager(nameList[num])); break;
+                case 1: employeeArrayList.add(new TopManager(nameList[num])); break;
+                case 2: employeeArrayList.add(new Clerk(nameList[num])); break;
             }
         }
     }
@@ -74,24 +83,48 @@ public class Company {
         employeeArrayList.add(employee);
     }
 
-
     // Самые высокие зарплаты
 
     public void getTopSalaryStaff(int count){
 
-        Collections.sort(employeeArrayList, new TopSalaryCompanyComparator());
+        Collections.sort(employeeArrayList, (o1, o2) -> {
+            if (o1.getMonthSalary() > o2.getMonthSalary()){
+                return -1;
+            }
+            if (o1.getMonthSalary() < o2.getMonthSalary()){
+                return 1;
+            }
+            return o1.getName().compareTo(o2.getName());
+        });
+
+        Employee employee;
 
         for (int i = 0; i < count && count <= employeeArrayList.size(); i++){
-            System.out.println(i + 1 + " : " + employeeArrayList.get(i).getMonthSalary());
+            employee = employeeArrayList.get(i);
+            System.out.println(i + 1 + " : " + employee.getName() + " - " + employee.getMonthSalary());
         }
     }
 
+    // Самые низкие зарплаты
+
     public void getLowestSalaryStaff(int count){
 
-        Collections.sort(employeeArrayList, new LowestSalaryCompanyComparator());
+        Collections.sort(employeeArrayList, (o1,o2) -> {
+            if (o1.getMonthSalary() > o2.getMonthSalary()){
+                return 1;
+            }
+            if (o1.getMonthSalary() < o2.getMonthSalary()){
+                return -1;
+            }
+            return o1.getName().compareTo(o2.getName());
+        }
+        );
+
+        Employee employee;
 
         for (int i = 0; i < count && count <= employeeArrayList.size(); i++){
-            System.out.println(i + 1 + " : " + employeeArrayList.get(i).getMonthSalary());
+            employee = employeeArrayList.get(i);
+            System.out.println(i + 1 + " : " + employee.getName() + " - " + employee.getMonthSalary());
         }
     }
 

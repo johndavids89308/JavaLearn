@@ -76,7 +76,7 @@ public class Main {
         System.out.println("Найм сотрудника:");
         System.out.println();
 
-        rockefellerCompany.hire(new Clerk());
+        rockefellerCompany.hire(new Clerk("Tony Montana"));
         System.out.println("Всего сотрудников: " + rockefellerCompany.getCountEmployee());
 
 
@@ -95,6 +95,8 @@ public class Main {
         System.out.println();
 
         rockefellerCompany.getLowestSalaryStaff(10);
+
+        //rockefellerCompany.getAllSalary();
 
     }
 }
