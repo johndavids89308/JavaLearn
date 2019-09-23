@@ -12,28 +12,17 @@ public class Main
     {
         ArrayList<Employee> staff = loadStaffFromFile();
 
-        // Сортировка
 
-/*        Collections.sort(staff, (o1,o2) -> {
-            if (o1.getSalary() > o2.getSalary()){
-                return -1;
-            }
-            if (o1.getSalary() < o2.getSalary()){
-                return 1;
-            }
-            return o1.getName().compareTo(o2.getName());
-        });*/
+        // В проекте с сотрудниками с помощью Stream API
+        // рассчитать максимальную зарплату тех, кто пришёл в 2017 году.
 
-        Collections.sort(staff, Comparator.comparing(Employee::getSalary).reversed()
-                .thenComparing(Employee::getName));
+        System.out.println("\nРассчитать максимальную зарплату тех, кто пришёл в 2017 году.\n");
 
-        SimpleDateFormat date = new SimpleDateFormat(dateFormat);
-
-        for (int i = 0; i < staff.size(); i++){
-            System.out.println(staff.get(i).getName() + " -> " + staff.get(i).getSalary() + " -> "
-                    + date.format(staff.get(i).getWorkStart()));
-        }
-
+        SimpleDateFormat finalDate = new SimpleDateFormat("yyyy");
+        staff.stream().sorted(Comparator.comparing(Employee::getSalary))
+                .sorted(Comparator.comparing(Employee::getWorkStart))
+                .filter(e -> finalDate.format(e.getWorkStart()).equals("2017") )
+                .forEach(System.out::println);
     }
 
     private static ArrayList<Employee> loadStaffFromFile()
