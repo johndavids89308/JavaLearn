@@ -1,9 +1,12 @@
 import core.Line;
 import core.Station;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
+import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -12,6 +15,10 @@ import java.util.Scanner;
 
 public class Main
 {
+    private static Logger stantionsLogger;
+    private static Logger errorsLogger;
+    private static Logger exceptionsLogger;
+
     private static String dataFile = "src/main/resources/map.json";
     private static Scanner scanner;
 
@@ -21,28 +28,9 @@ public class Main
     {
         RouteCalculator calculator = getRouteCalculator();
 
-
-
-
-
-        // Мои тесты
-
-/*        List myRoute = calculator.getShortestRoute(stationIndex
-                        .getStation("Горьковская"),
-                stationIndex.getStation("Чернышевская")); //Василеостровская
-
-        printRoute(myRoute);
-
-        System.out.println("Длительность: " +
-                RouteCalculator.calculateDuration(myRoute) + " минут");*/
-
-
-
-
-
-
-
-
+        stantionsLogger = LogManager.getLogger("stantions");
+        errorsLogger = LogManager.getLogger("errors");
+        exceptionsLogger = LogManager.getLogger("exceptions");
 
         System.out.println("Программа расчёта маршрутов метрополитена Санкт-Петербурга\n");
         scanner = new Scanner(System.in);
@@ -88,16 +76,21 @@ public class Main
 
     private static Station takeStation(String message)
     {
-        for(;;)
-        {
-            System.out.println(message);
-            String line = scanner.nextLine().trim();
-            Station station = stationIndex.getStation(line);
-            if(station != null) {
-                return station;
+            for (; ; ) {
+                System.out.println(message);
+                String line = scanner.nextLine().trim();
+                Station station = stationIndex.getStation(line);
+                if (station != null) {
+                    if (message.equals("Введите станцию отправления:")) {
+                        stantionsLogger.info("Станция отправления: " + line);
+                    } else {
+                        stantionsLogger.info("Станция назначения: " + line);
+                    }
+                    return station;
+                }
+                errorsLogger.error("Станция не найдена: " + line);
+                System.out.println("Станция не найдена :(");
             }
-            System.out.println("Станция не найдена :(");
-        }
     }
 
     // Метод пасит json файл
@@ -120,6 +113,7 @@ public class Main
             parseConnections(connectionsArray);
         }
         catch(Exception ex) {
+            exceptionsLogger.fatal(ex.getStackTrace());
             ex.printStackTrace();
         }
     }
@@ -190,6 +184,7 @@ public class Main
             lines.forEach(line -> builder.append(line));
         }
         catch (Exception ex) {
+            exceptionsLogger.fatal(ex.getStackTrace());
             ex.printStackTrace();
         }
         return builder.toString();
