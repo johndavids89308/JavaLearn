@@ -13,7 +13,6 @@ public class Main {
             long kb = 1024;
             long mb = 1024 * 1024;
             long gb = 1024 * 1024 * 1024;
-            BigInteger tb = new BigInteger(String.valueOf(1024 * 1024 * 1024 * 1024));
 
             Files.walk(Paths.get("scan"))
                     .filter(Files::isRegularFile)
@@ -23,15 +22,13 @@ public class Main {
                         if(file.length() < kb){
                             System.out.println(file + " : " + file.length() + " B");
                         }else if (file.length() >= kb && file.length() < mb){
-                            System.out.println(file + " : " + file.length() / 1000 + " KB");
+                            System.out.println(file + " : " + file.length() / kb + " KB");
                         }else if(file.length() >= mb && file.length() < gb){
-                            System.out.println(file + " : " + file.length() / 1000000 + " MB");
+                            System.out.println(file + " : " + file.length() / mb + " MB");
                         }else {
-                            System.out.println(file + " : " + file.length() / 1000000000 + " GB");
+                            System.out.println(file + " : " + file.length() / gb + " GB");
                         }
-                        //System.out.println(file + " : " + file.length());
                     });
-            System.out.println(tb);
         }catch (Exception e){
             e.getStackTrace();
         }
