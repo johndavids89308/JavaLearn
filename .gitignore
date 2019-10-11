@@ -3,4 +3,5 @@
 .DS_Store
 src/.DS_Store
 *.xml
+!log4j2.xml
 out/
