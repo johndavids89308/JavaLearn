@@ -10,15 +10,27 @@ import java.nio.file.Paths;
 public class HtmlPars {
 
     public void htmlParse(String url) throws Exception {
-        Document doc = Jsoup.connect(url).get();
-        Elements newImg = doc.select("img.g-picture");
-        InputStream in;
-        String[] fileName;
 
-        for(Element element : newImg){
-            fileName = element.attr("src").split("/");
-            in = new URL(element.attr("src")).openStream();
-            Files.copy(in, Paths.get("data/" + fileName[fileName.length - 1]));
+        Document doc = Jsoup.connect(url).get();
+        Elements img = doc.select("img");
+        InputStream in;
+
+        String[] fileNameArr;
+
+        for(Element element : img){
+            String link = element.absUrl("src");
+            fileNameArr = link.split("/");
+            String fileName = fileNameArr[fileNameArr.length - 1];
+
+            if (!fileName.contains("gif")
+                    && !fileName.contains("jpg")
+                    && !fileName.contains("png")
+                    && !fileName.contains("jpeg")){
+                continue;
+            }
+
+            in = new URL(link).openStream();
+            Files.copy(in, Paths.get("data/" + fileName));
         }
     }
 

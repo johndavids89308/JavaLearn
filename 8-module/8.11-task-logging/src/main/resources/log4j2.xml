@@ -16,7 +16,7 @@
                 <TimeBasedTriggeringPolicy interval="1" modulate="true" />
             </Policies>
         </RollingFile>
-         
+
         <RollingFile name="errors" fileName="${APP_LOG_ROOT}/errors.log" filePattern="${APP_LOG_ROOT}/errors-%d{yyyy-MM-dd}.log">
             <PatternLayout>
                 <pattern>%d{yyy-MM-dd HH:mm:ss.SSS} [%t] %level %logger{36} - %msg%n</pattern>
