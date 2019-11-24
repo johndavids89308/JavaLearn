@@ -1,4 +1,5 @@
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "Courses")
@@ -18,11 +19,27 @@ public class Courses {
 
     private String description;
 
-    @Column(name = "teacher_id")
-    private int teacherId;
+    // Связь многие к одному с сущностью Teacher
+
+    @ManyToOne(cascade = CascadeType.ALL)
+    private Teacher teacher;
+
+    // Аннотация указывается если свойство называется не как в базе данных
 
     @Column(name = "students_count")
     private int studentCount;
+
+
+    // Связь многие ко многим
+    // Для создания связи, берем общую связующую таблицу Subscriptions
+    // и указываем поля, которые мы соединяем.
+
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "Subscriptions",
+        joinColumns = {@JoinColumn(name = "course_id")},
+        inverseJoinColumns = {@JoinColumn(name = "student_id")}
+    )
+    private List<Student> students;
 
     private int price;
 
@@ -69,12 +86,12 @@ public class Courses {
         this.description = description;
     }
 
-    public int getTeacherId() {
-        return teacherId;
+    public Teacher getTeacher() {
+        return teacher;
     }
 
-    public void setTeacherId(int teacherId) {
-        this.teacherId = teacherId;
+    public void setTeacherId(Teacher teacher) {
+        this.teacher = teacher;
     }
 
     public int getStudentCount() {
@@ -99,6 +116,14 @@ public class Courses {
 
     public void setPricePerHour(float pricePerHour) {
         this.pricePerHour = pricePerHour;
+    }
+
+    public List<Student> getStudents() {
+        return students;
+    }
+
+    public void setStudents(List<Student> students) {
+        this.students = students;
     }
 
 }
