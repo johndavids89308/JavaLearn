@@ -10,11 +10,17 @@ public class Student {
     private int id;
 
     private String name;
-
     private int age;
 
     @Column(name = "registration_date")
     private Date registrationDate;
+
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "Subscriptions",
+    joinColumns = {@JoinColumn(name = "student_id")},
+    inverseJoinColumns = {@JoinColumn(name = "course_id")}
+    )
+    private List<Course> courses;
 
     public int getId() {
         return id;
@@ -46,5 +52,13 @@ public class Student {
 
     public void setRegistrationDate(Date registrationDate) {
         this.registrationDate = registrationDate;
+    }
+
+    public List<Course> getCourses() {
+        return courses;
+    }
+
+    public void setCourses(List<Course> courses) {
+        this.courses = courses;
     }
 }

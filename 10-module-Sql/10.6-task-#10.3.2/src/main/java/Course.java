@@ -3,27 +3,26 @@ import java.util.List;
 
 @Entity
 @Table(name = "Courses")
-public class Courses {
+public class Course {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     private String name;
-
     private int duration;
+    private String description;
+    private int price;
 
+    // Описание Енума
     @Enumerated(EnumType.STRING)
     @Column(columnDefinition = "enum")
     private CourseType type;
-
-    private String description;
 
     // Связь многие к одному с сущностью Teacher
     @ManyToOne(cascade = CascadeType.ALL)
     private Teacher teacher;
 
-    // Аннотация указывается если свойство называется не как в базе данных
     @Column(name = "students_count")
     private int studentCount;
 
@@ -33,12 +32,10 @@ public class Courses {
 
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "Subscriptions",
-        joinColumns = {@JoinColumn(name = "course_id")},
-        inverseJoinColumns = {@JoinColumn(name = "student_id")}
+            joinColumns = {@JoinColumn(name = "course_id")},
+            inverseJoinColumns = {@JoinColumn(name = "student_id")}
     )
     private List<Student> students;
-
-    private int price;
 
     @Column(name = "price_per_hour")
     private float pricePerHour;
@@ -123,4 +120,7 @@ public class Courses {
         this.students = students;
     }
 
+    public void setTeacher(Teacher teacher) {
+        this.teacher = teacher;
+    }
 }

@@ -19,7 +19,7 @@
         <!-- Drop and re-create the database schema on startup -->
         <property name="hbm2ddl.auto">validate</property>
 
-        <mapping class="Courses"/>
+        <mapping class="Course"/>
         <mapping class="Teacher"/>
         <mapping class="Student"/>
         <mapping class="Purchase"/>

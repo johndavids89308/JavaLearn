@@ -17,49 +17,46 @@ public class Main {
         Metadata metadata = new MetadataSources(registry).getMetadataBuilder().build();
         SessionFactory sessionFactory = metadata.getSessionFactoryBuilder().build();
 
-
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
 
-        // Получение данных
-        Courses courses = session.get(Courses.class, 2);
-        System.out.println(courses.getName() + " : " + courses.getId());
+        // Объединение 3х таблиц
+/*      SELECT students.name, courses.name FROM students
+        JOIN subscriptions ON students.id=subscriptions.student_id
+        JOIN courses ON subscriptions.course_id=courses.id WHERE courses.id=9;*/
 
-        // Добавление данных
-/*        Courses course = new Courses();
-        course.setName("Новый курс");
-        course.setType(CourseType.BUSINESS);
-        course.setTeacherId(1);
-        session.save(course);*/
+        // Получение данных из таблицы
+/*      Course courses = session.get(Course.class, 2);
+        System.out.println(courses.getName() + " : " + courses.getId());*/
 
-        // Изменение данных
-/*        Courses courseUpdate = session.get(Courses.class, 50);
-        courseUpdate.setName("Waaaazaaaaa!");
-        session.save(courseUpdate);*/
-
-        // Удаление данных
-/*        Courses courseDelete = session.get(Courses.class, 50);
-        session.delete(courseDelete);*/
-
-        // Связь многие к одному, получение учителя по id
-
-        Courses course2 = session.get(Courses.class, 2);
-        System.out.println(course2.getName() + " : " + course2.getId() +
-                " : " + course2.getTeacher().getName());
+        // Связь ManyToOne, какой учитель у курса
+        Course course2 = session.get(Course.class, 2);
+        System.out.println("Курс: " + course2.getName()
+                + " - Учитель : " + course2.getTeacher().getName());
 
         System.out.println();
 
-        // Связь многие ко мнгим, получение списка студентов у каждого курса
-
-        Courses course3 = session.get(Courses.class, 2);
-        System.out.println(course3.getName() + " : " + course3.getId() +
-                " : " + course3.getStudents().size());
+        // Связь ManyToMany
+        //Какие студенты у курса
+        Course course3 = session.get(Course.class, 2);
+        System.out.println(course3.getName()
+                + " : " + course3.getStudents().size());
 
         List<Student> students = course3.getStudents();
 
         students.forEach(s->{System.out.println(s.getName());});
 
+        System.out.println();
+
+        // Связь ManyToMany
+        // Какие курсы у студента
+        Student student = session.get(Student.class, 2);
+        System.out.println(student.getName() + " : " + student.getCourses().size());
+        student.getCourses().forEach(c->{System.out.println(c.getName());});
+
+
         transaction.commit();
+        session.close();
         sessionFactory.close();
 
     }
