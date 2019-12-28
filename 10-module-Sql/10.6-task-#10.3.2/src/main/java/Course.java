@@ -20,15 +20,12 @@ public class Courses {
     private String description;
 
     // Связь многие к одному с сущностью Teacher
-
     @ManyToOne(cascade = CascadeType.ALL)
     private Teacher teacher;
 
     // Аннотация указывается если свойство называется не как в базе данных
-
     @Column(name = "students_count")
     private int studentCount;
-
 
     // Связь многие ко многим
     // Для создания связи, берем общую связующую таблицу Subscriptions
