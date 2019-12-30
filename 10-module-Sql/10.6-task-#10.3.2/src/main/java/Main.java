@@ -36,7 +36,7 @@ public class Main {
 
         System.out.println();
 
-        // Связь ManyToMany
+        // Связь OneToMany
         //Какие студенты у курса
         Course course3 = session.get(Course.class, 2);
         System.out.println(course3.getName()
@@ -48,7 +48,7 @@ public class Main {
 
         System.out.println();
 
-        // Связь ManyToMany
+        // Связь OneToMany
         // Какие курсы у студента
         Student student = session.get(Student.class, 2);
         System.out.println(student.getName() + " : " + student.getCourses().size());

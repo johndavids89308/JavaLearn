@@ -15,7 +15,7 @@ public class Student {
     @Column(name = "registration_date")
     private Date registrationDate;
 
-    @ManyToMany(cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "Subscriptions",
     joinColumns = {@JoinColumn(name = "student_id")},
     inverseJoinColumns = {@JoinColumn(name = "course_id")}

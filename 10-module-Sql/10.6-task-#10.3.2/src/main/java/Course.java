@@ -30,7 +30,7 @@ public class Course {
     // Для создания связи, берем общую связующую таблицу Subscriptions
     // и указываем поля, которые мы соединяем.
 
-    @ManyToMany(cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "Subscriptions",
             joinColumns = {@JoinColumn(name = "course_id")},
             inverseJoinColumns = {@JoinColumn(name = "student_id")}
