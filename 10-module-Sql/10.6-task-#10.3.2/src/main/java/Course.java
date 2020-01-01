@@ -20,11 +20,11 @@ public class Course {
     private CourseType type;
 
     // Связь многие к одному с сущностью Teacher
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Teacher teacher;
 
-    @Column(name = "students_count")
-    private int studentCount;
+    @Column(name = "students_count", nullable = true)
+    private Integer studentCount;
 
     // Связь многие ко многим
     // Для создания связи, берем общую связующую таблицу Subscriptions

@@ -1,14 +1,16 @@
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.Date;
 
 @Entity
 @Table(name = "PurchaseList")
 public class Purchase {
 
-    @Id
+    @Column(name = "course_id")
+    private Integer courseId;
+
+    @Column(name = "student_id")
+    private Integer studentId;
+
     @Column(name = "student_name")
     private String studentName;
 
@@ -17,8 +19,25 @@ public class Purchase {
 
     private int price;
 
+    @Id
     @Column(name = "subscription_date")
     private Date subscriptionDate;
+
+    public Integer getStudentId() {
+        return studentId;
+    }
+
+    public void setStudentId(Integer studentId) {
+        this.studentId = studentId;
+    }
+
+    public Integer getCourseId() {
+        return courseId;
+    }
+
+    public void setCourseId(Integer courseId) {
+        this.courseId = courseId;
+    }
 
     public String getStudentName() {
         return studentName;
